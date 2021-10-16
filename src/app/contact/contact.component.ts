@@ -9,7 +9,8 @@ import { Feedback, ContactType } from '../shared/feedback';
 })
 export class ContactComponent implements OnInit {
 
-  @ViewChild('fform') feedbackFormDirective;
+  @ViewChild('fform')
+  feedbackFormDirective!: { resetForm: () => void; };
   feedbackForm!: FormGroup;
   feedback!: Feedback;
   contactType = ContactType;
@@ -74,13 +75,13 @@ export class ContactComponent implements OnInit {
     for (const field in this.formErrors) {
       if (this.formErrors.hasOwnProperty(field)) {
         // clear previous error message (if any)
-        this.formErrors[field] = '';
+        (this.formErrors as any)[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
-          const messages = this.validationMessages[field];
+          const messages = (this.validationMessages as any)[field];
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
-              this.formErrors[field] += messages[key] + ' ';
+              (this.formErrors as any)[field] += messages[key] + ' ';
             }
           }
         }
