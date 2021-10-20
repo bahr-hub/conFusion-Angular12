@@ -39,6 +39,7 @@ export class DishdetailComponent implements OnInit {
   errMess!: string;
   dishcopy!: Dish;
   visibility = 'shown';
+  auxComment = this.getAuxComment();
 
   constructor(private dishService: DishService,
     private route: ActivatedRoute,
@@ -127,6 +128,7 @@ export class DishdetailComponent implements OnInit {
   onSubmit() {
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toISOString();
+    this.auxComment = this.getAuxComment();
 
     this.dishcopy.comments.push(this.comment);
     this.dishService.putDish(this.dishcopy)
@@ -134,7 +136,7 @@ export class DishdetailComponent implements OnInit {
         this.dish = dish; this.dishcopy = dish;
       },
       errmess => { this.dish = null!;
-         this.dishcopy = null!; this.errMess = <any>errmess; });
+          this.errMess = <any>errmess; });
 
     console.log(this.comment);
     this.comment = null!;
@@ -144,6 +146,15 @@ export class DishdetailComponent implements OnInit {
       rating: 5
     });
   }
+
+  getAuxComment() {
+    return {
+      author: '',
+      rating: '1',
+      comment: '',
+      date: new Date(),
+      valid: false };
+    }
 
 
 }

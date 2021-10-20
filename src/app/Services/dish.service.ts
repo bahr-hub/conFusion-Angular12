@@ -39,7 +39,7 @@ export class DishService {
   putDish(dish: Dish): Observable<Dish> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json'
+        'Content-Type': 'application/json'
       })
     };
     return this.http.put<Dish>(baseURL + 'dishes/' + dish.id, dish, httpOptions)
